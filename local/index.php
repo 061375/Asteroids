@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <script src="../js/script.js"></script>
+    <script>
+        const ASTEROIDS_CONFIG = {
+            base:{
+                version:"",
+                allow_enemy_timer:2000,
+                allow_enemy_timer_increment:2000,
+                allow_enemy_random:0.0005,
+                allow_enemy_random_increment:0.0005,
+                max_enemy_increment:1,
+                max_asteroids:20,
+                asteroids_random:0.02,
+                draw_asteroids_time:20,
+                assets_folder:"assets/",
+                img_folder:"img/",
+                svg_folder:"svg/",
+                background_image:"space.jpg",
+                all_images:["space.jpg","boom1.gif","rock1.gif"],
+                all_svg:["enemy1.svg","ship.svg"],
+                css_path:"assets/css/style.css"
+            },
+            ship:{
+                size:40,
+                friction:0.005,
+                acc:0.1,
+                maxSpeed:10 ,
+                resetTimer:10000,
+                image:"ship.svg",
+                image_id:"asteroids_theship",
+                bullet_targets:["asteroids","enemys"],
+                explosion_image:"boom1.gif",
+                bullet_color:"#fff"
+            },
+            asteroid: {
+                points:100,
+                resetTimer:1000,
+                image:"rock1.gif",
+                image_id:"astroid_img",
+                sizeRange:[10,50],
+                speedIncrementRange:[10,20],
+                explosion_image:"boom1.gif",
+                target_objects:["ship","enemys"]
+            },
+            enemy: {
+                smart:false,
+                points:100,
+                resetTimer:1000,
+                image:"enemy1.svg",
+                image_id:"asteroid_enemy",
+                sizeRange:[30,50],
+                kos:5000,
+                border_t:200,
+                speedIncrementRange:[20,40],
+                explosion_image:"boom1.gif",
+                bullet_color:"#edff00",
+                bullet_targets:["ship","asteroids"]
+            },
+            bullet:{
+                speed:300,
+                size:3
+            }
+        }    
+    </script>
+</body>
+</html>

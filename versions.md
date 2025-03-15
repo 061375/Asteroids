@@ -7,9 +7,11 @@
 # Versions
 
 ## 📅 February 26, 2025
-## ⬆️📅 March 14, 2025
-## ⬆️ 1.0.0.6
+## ⬆️📅 March 15, 2025
+## ⬆️ 1.0.0.7
 
+* ## 1.0.0.7
+*   🐱 added a running example in the local folder
 * ## 1.0.0.6
 *   🐱 asteroid shards go faster than parent 
 * ## 1.0.0.5
