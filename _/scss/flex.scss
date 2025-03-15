@@ -1,0 +1,10 @@
+.flex {
+    display: flex;
+}
+@include break 
+{
+    .flex {
+        display: block;
+    }
+}
+@include flex;

@@ -1,0 +1,20 @@
+{
+  "include": [ "**/*.ts" ],
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms",
+    "**/libs"
+  ],
+  "compilerOptions": {
+    "lib": ["es6", "dom", "es2017"],
+    "module": "es2020",
+    "target": "es2017",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "outDir": "_/js"
+  }
+}

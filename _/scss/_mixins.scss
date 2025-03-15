@@ -1,0 +1,26 @@
+@mixin flex($max:6, $id:'c')
+{
+   @for $i from 1 through $max {
+     .flex .#{$id}#{$i} { flex: $i; }
+   }
+}
+/** 
+ * media query break wrapper
+ * @param string $width - 768px
+ * */
+ @mixin break ($width: 768px){
+    @media screen and (max-width: $width) {
+      @content;
+    }
+  }
+/** 
+ * force not allow mouse selection of wrapped text
+ * */
+@mixin noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
