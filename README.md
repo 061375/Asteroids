@@ -9,6 +9,7 @@ I originally built a little easter egg into an intranet app at work. In the logi
 ᓚᘏᗢ
 
 [Versions](versions.md)
+
 [TODO list](todo.md)
 
 Development uses [GRUNT](https://gruntjs.com/).
@@ -17,5 +18,13 @@ Start by running:
 	npm update
 
 from the terminal...
+
+#### 💧 Typescript
+#### 💧 SASS
+
+The working files are in the [/_](_) directory.
+
+There is a sample config file in [/local](local) as well as the assets.
+
 
 

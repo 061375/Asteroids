@@ -1,15 +1,11 @@
-# Asteroids !!
-## about Built without AI ( mostly ) - sort of an homage to : [Kickass!|https://kickassapp.com]
-## Jeremy Heminger <jeremy.heminger@aquamor.com>, <contact@jeremyheminger.com>
-
-                                                ᓚᘏᗢ
-
 # Versions
 
 ## 📅 February 26, 2025
 ## ⬆️📅 March 21, 2025
-## ⬆️ 1.0.0.11
+## ⬆️ 1.0.0.12
 
+* ## 1.0.0.12
+*   🐱 update README
 * ## 1.0.0.11
 *   🐱 update README
 * ## 1.0.0.10
