@@ -23,6 +23,8 @@
 - sound
 - might add hyperspace using middle mouse or the space bar
 - **DONE** better looking scoreboard
+- validate config for required fields and set defaults
+- move game over and instructions to external templates for easier editing
 - High scores stored in a database or maybe just local storage
 - (maybe) a boss of some kind ... something silly and inappropriate (thinking Monty Python)
 -- A Donald Trump boss throwing hamburgers and yelling "They're eating the dogs! They're eating the cats!"

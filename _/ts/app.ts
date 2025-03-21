@@ -115,6 +115,8 @@ namespace AquaFun {
                             </svg>
                         </a>
                     </h3>
+                    <br>
+                    <small>version ${ASTEROIDS_CONFIG.base.version}</small>
                 </div>
             `
             this.game_container.appendChild(this.game_over)

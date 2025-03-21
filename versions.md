@@ -2,8 +2,12 @@
 
 ## 📅 February 26, 2025
 ## ⬆️📅 March 21, 2025
-## ⬆️ 1.0.0.12
+## ⬆️ 1.0.0.13
 
+* ## 1.0.0.13
+*   🐱 update TODO
+*   🐱 update README
+*   🐱 disply version on game
 * ## 1.0.0.12
 *   🐱 update README
 * ## 1.0.0.11
