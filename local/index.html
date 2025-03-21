@@ -28,6 +28,7 @@
                 css_path:"assets/css/style.css"
             },
             ship:{
+                max_lives:3,
                 size:40,
                 friction:0.005,
                 acc:0.1,
@@ -37,7 +38,9 @@
                 image_id:"asteroids_theship",
                 bullet_targets:["asteroids","enemys"],
                 explosion_image:"boom1.gif",
-                bullet_color:"#fff"
+                bullet_color:"#fff",
+                force_shield_timer_max:200,
+                shield_class:["force_field_one","force_field_two"]
             },
             asteroid: {
                 points:100,

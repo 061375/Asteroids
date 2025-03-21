@@ -2,12 +2,14 @@
 
 ## Jeremy Heminger <contact@jeremyheminger.com>
 
+	ᓚᘏᗢ
+
 #### Built without AI  *mostly*  - sort of an homage to : [Kickass!](https://kickassapp.com)
 I originally built a little easter egg into an intranet app at work. In the login if the user gave the secret user name and password that was *not very* surreptitiously nested in the HTML source of the login page, then a simple Asteroids game would appear. However once I started playing with it, *over time*, it started to evolve into a project at home on my own time.
 
-[Online DEMO](https://demo.jeremyheminger.com/asteroids/)
+| ![screenshot 1](/img/screenshot1.jpg) | | ![screenshot 2](/img/screenshot2.jpg) |
 
-ᓚᘏᗢ
+[Online DEMO](https://demo.jeremyheminger.com/asteroids/)
 
 [Versions](versions.md)
 
@@ -18,7 +20,9 @@ Start by running:
 
 	npm update
 
-from the terminal...
+from the terminal then:
+
+	grunt
 
 #### 💧 Typescript
 #### 💧 SASS
