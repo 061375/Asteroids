@@ -1,9 +1,10 @@
 - **DONE** **BUG** enemy destroyng asteroids raises player score
-- **BUG** enemy ships no longer firing at rocks or dodging
+- **DONE** **BUG** enemy ships no longer firing at rocks or dodging
 - **DONE** **BUG** removing rocks and ships for game state change should not produce explosion
-- **BUG** pause stops levels from incrementing and rocks from being created
-- **BUG** level is goingup even when game is in game over status
-- **DONE** 3 ships per game
+- **DONE** **BUG** pause stops levels from incrementing and rocks from being created and ship from being controlled
+- **DONE** **BUG** level is going up even when game is in game over status
+- **DONE** max ships per game
+- **BUG** **DONE** max ships not being reset on new game
 - **BUG** last ship not being removed at game over
 - **DONE** killing big rocks should make smaller rocks ( like in the original ) 
 - **DONE** ships should aim at asteroids that are too close to them ( at higher levels )
@@ -11,14 +12,18 @@
 - **DONE** the frequency of the ships shooting is still too high
 - remake ships and maybe rocks in Blender
 - **DONE** game over starting screen
-- game over
-- instructions
+- **DONE** force field after death for a few moments when ship is made alive again
+- enemies should get progressively more clever
+- **DONE** game over
+- bonus ship at score intervals
+- **DONE** instructions
 - optimize everything as much as possible
 - comment code
-- on death enemy ships should be removed ( reset )
+- on player death enemy ships should be removed ( reset )
 - sound
+- might add hyperspace using middle mouse or the space bar
 - **DONE** better looking scoreboard
-- High scores stored in a database
+- High scores stored in a database or maybe just local storage
 - (maybe) a boss of some kind ... something silly and inappropriate (thinking Monty Python)
 -- A Donald Trump boss throwing hamburgers and yelling "They're eating the dogs! They're eating the cats!"
 -- Followed by the "real" boss Elon shooting starships at you ( but luckily half of them blow up before they even get close ) The starships will have the first stage and the upper stage will detach and and actually veer towards Trump ( on purpose but not on purpose ). If it hits Trump it will damage him. When he dies Elon will hold up flags and cheer with "much rejoicing" ( i.e. Holy Grail ). They will both have FAT baby bodies

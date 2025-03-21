@@ -8,8 +8,16 @@
 
 ## 📅 February 26, 2025
 ## ⬆️📅 March 21, 2025
-## ⬆️ 1.0.0.9
+## ⬆️ 1.0.0.10
 
+* ## 1.0.0.10
+*   🐱 links
+*   🐱 instructions
+*   🐱 pre-loading message
+*   🐞 ships were'nt dodging
+*   🐱 force shield
+*   🐱 game over event
+*   🐞 max ships were not being rest on new game
 * ## 1.0.0.9
 *   🐱 Asteroids.draw allow a target container as a parameter
 *   🐱 Game Over overlay

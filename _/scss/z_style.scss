@@ -4,17 +4,36 @@ body, html {
     margin: 0;
     padding: 0
 }
+#GTHYUGFRQQ_wsasteroids_loading {
+    position: fixed;
+    z-index: 9999999;
+    left:40vw;
+    top:40vh;
+    color: #000;
+    text-shadow: 0px 0px 2px #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
 #GTHYUGFRQQ_wsasteroids { 
+    .jh_link {
+        color: #d8d5ef;
+        position: relative;
+        top: -8px;
+    }
     &.noselect {
         @include noselect;
     }
     font-family: "Orbitron", sans-serif;
     z-index: 9999999;
     #asteroids_message {
-        left:50vw;
-        top:40vh;
+        left: 40vw;
+        top: 40vh;
         position: fixed;
         color: #fff;
+        width: 100vw;
+        text-align: center;
+        font-size: 35px;
+        letter-spacing: 11px;
+        z-index: 999999;
     }
     .astroid_img {
         display: block;
@@ -49,6 +68,23 @@ body, html {
             margin: 5px 0 16px;
         }
     }
+    .s_instructions {
+        z-index: 9999999;
+        position: fixed;
+        left: 18vw;
+        top: 10vh;
+        color: #fff;
+        font-size: 1.2em;
+        border-radius: 5px;
+        text-align: center;
+        height: 60vh;
+        width: 60vw;
+        overflow-y: auto;
+        line-height: 1.5;
+        img {
+            max-width: 50%;
+        }
+    }
     .scoreboard {
         z-index: 9999999;
         position: fixed;
@@ -76,6 +112,13 @@ body, html {
         visibility: initial;
         display: block;
         z-index: 2;
+        border-radius: 50%;
+        &.force_field_one {
+            box-shadow: 0px 0px 15px yellow;
+        }
+        &.force_field_two {
+            box-shadow: 0px 0px 15px white;
+        }
     }
     .ship_lives {
         padding: 0 
@@ -87,11 +130,23 @@ body, html {
     .btn {
         border-radius: 5px;
         border: solid 2px #fff;
-        cursor: pointer;
         padding: 3px 5px;
         background-color: rgba(2, 2, 114, 0.527);
+    }
+    .pointer {
+        cursor: pointer;
     }
     .hidden {
         display: none;
     }
+    &.fade {
+        transition:opacity 1s linear;*
+        &.out {
+            opacity: 0;
+        }
+        &.in {
+            opacity: 1;
+        }
+    }
+    
 }

@@ -32,7 +32,9 @@ namespace AquaFun {
         public screen_width:number = window.innerWidth
         public screen_height:number = window.innerHeight
         public score_board:HTMLDivElement
+        public b_game_over:boolean = true
         public game_over:HTMLDivElement
+        public instructions:HTMLDivElement
         public game_container:HTMLElement = document.getElementById("GTHYUGFRQQ_wsasteroids")
         public game_objects:any = {
             ship:null,
@@ -96,19 +98,104 @@ namespace AquaFun {
             this.game_over.setAttribute("class","gameover")
             this.game_over.innerHTML = `
                 <div>
-                <h1>ASTEROIDS</h1>
-                <h2>GAME OVER</h2>
-                <div class="flex">
-                    <div class="c5 btn instructions">INSTRUCTIONS</div>
-                    <div class="c1"></div>
-                    <div class="c5 btn newgame">NEW GAME</div>
-                </div>
-                <h3>Jeremy Heminger 2025</h3>
+                    <h1>ASTEROIDS</h1>
+                    <h2>GAME OVER</h2>
+                    <div class="flex">
+                        <div class="c5 pointer btn instructions">INSTRUCTIONS</div>
+                        <div class="c1"></div>
+                        <div class="c5 pointer btn newgame">NEW GAME</div>
+                    </div>
+                    <h3>
+                        <a href="https://jeremyheminger.com/" target="_blank" class="jh_link">
+                            By: Jeremy Heminger 2025
+                        </a> 
+                        <a href="https://github.com/061375/asteroids" target="_blank">
+                            <svg height="32" aria-hidden="true" viewBox="0 0 24 24" version="1.1" width="32" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
+                                <path fill="#ffffff" d="M12 1C5.9225 1 1 5.9225 1 12C1 16.8675 4.14875 20.9787 8.52125 22.4362C9.07125 22.5325 9.2775 22.2025 9.2775 21.9137C9.2775 21.6525 9.26375 20.7862 9.26375 19.865C6.5 20.3737 5.785 19.1912 5.565 18.5725C5.44125 18.2562 4.905 17.28 4.4375 17.0187C4.0525 16.8125 3.5025 16.3037 4.42375 16.29C5.29 16.2762 5.90875 17.0875 6.115 17.4175C7.105 19.0812 8.68625 18.6137 9.31875 18.325C9.415 17.61 9.70375 17.1287 10.02 16.8537C7.5725 16.5787 5.015 15.63 5.015 11.4225C5.015 10.2262 5.44125 9.23625 6.1425 8.46625C6.0325 8.19125 5.6475 7.06375 6.2525 5.55125C6.2525 5.55125 7.17375 5.2625 9.2775 6.67875C10.1575 6.43125 11.0925 6.3075 12.0275 6.3075C12.9625 6.3075 13.8975 6.43125 14.7775 6.67875C16.8813 5.24875 17.8025 5.55125 17.8025 5.55125C18.4075 7.06375 18.0225 8.19125 17.9125 8.46625C18.6138 9.23625 19.04 10.2125 19.04 11.4225C19.04 15.6437 16.4688 16.5787 14.0213 16.8537C14.42 17.1975 14.7638 17.8575 14.7638 18.8887C14.7638 20.36 14.75 21.5425 14.75 21.9137C14.75 22.2025 14.9563 22.5462 15.5063 22.4362C19.8513 20.9787 23 16.8537 23 12C23 5.9225 18.0775 1 12 1Z"></path>
+                            </svg>
+                        </a>
+                    </h3>
                 </div>
             `
             this.game_container.appendChild(this.game_over)
             /// <-- CREATE GAME OVER
             ///
+
+            ///
+            /// CREATE INSTRUCTIONS -->
+            this.instructions = document.createElement("div")
+            this.instructions.setAttribute("id","s_instructions")
+            this.instructions.setAttribute("class","s_instructions btn hidden")
+            this.instructions.innerHTML = `
+                <div>
+                <div class="flex">
+                    <div class="c6"></div>
+                    <div class="c1 btn pointer close">X</div>
+                </div>
+                <h1>INSTRUCTIONS</h1>
+                <p>
+                    You're a space fighter pilot stuck in an asteroid field and you have to destroy the rocks to survive.
+                    <br>
+                    You will also be attacked by aliens in an infinite volley.
+                    <br>
+                    You have 3 tries.
+                    <br>
+                    Face it my good man...you are fucked. 
+                    <br>
+                    Score as many points as you can. There may or may not be a few bosses along the way.
+                    <p>
+                    Have fun!
+                    </p>
+                </p>
+                <h3>Controls</h3>
+                <p>
+                    Use the mouse to aim the ship.
+                    <br>
+                    The left-click shoots.
+                    <br>
+                    Depressing right-click thrusts your ship.
+                    <br>
+                    [ P ] pauses the game.
+                    <br>
+                    [ B ] the boss is coming!  
+                </p>
+                <h3>Points</h3>
+                <div class="flex">
+                    <div class="c1">
+                        <img src="${ASTEROIDS_CONFIG.base.assets_folder + ASTEROIDS_CONFIG.base.img_folder + ASTEROIDS_CONFIG.asteroid.image}" />
+                    </div>
+                    <div class="c1">
+                        X ${ASTEROIDS_CONFIG.asteroid.points}
+                    </div>
+                    <div class="c6">
+                        The score is based on the size of the rock.<br>The smaller the rock the higher the score.
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="flex">
+                    <div class="c1">
+                        <img src="${ASTEROIDS_CONFIG.base.assets_folder + ASTEROIDS_CONFIG.base.svg_folder + ASTEROIDS_CONFIG.enemy.image}" />
+                    </div>
+                    <div class="c1">
+                        X ${ASTEROIDS_CONFIG.enemy.points}
+                    </div>
+                    <div class="c6">
+                        These guys shoot back and they get smarter and faster over time.
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="flex">
+                    <div class="c1">????</div>
+                    <div class="c1"></div>
+                    <div class="c6">Boss enemies</div>
+                </div>
+                <p>&nbsp;</p>
+                </div>
+            `
+            this.game_container.appendChild(this.instructions)
+            /// <-- CREATE INSTRUCTIONS
+            ///
+
 
             ///
             /// EVENTS -->
@@ -149,7 +236,7 @@ namespace AquaFun {
                         // the boss is coming!!!!!!!
                         document.body.style.backgroundImage = ""
                         document.body.innerHTML = ""
-                        window.location.href = "/"
+                        window.location.href = ASTEROIDS_CONFIG.base.boss_coming_link
                         break;
                 }
 
@@ -157,6 +244,16 @@ namespace AquaFun {
             document.querySelector("#gameover .newgame").addEventListener("click",(e)=>{
                 e.stopPropagation()
                 $this.new_game()
+            })
+            document.querySelector("#gameover .instructions").addEventListener("click",(e)=>{
+                e.stopPropagation()
+                $this.game_over.classList.add("hidden")
+                $this.instructions.classList.remove("hidden")
+            })
+            document.querySelector("#s_instructions .close").addEventListener("click",(e)=>{
+                e.stopPropagation()
+                $this.game_over.classList.remove("hidden")
+                $this.instructions.classList.add("hidden")
             })
             /// <-- EVENTS
 
@@ -171,7 +268,7 @@ namespace AquaFun {
         }
         new_game()
         {
-            
+            this.b_game_over = false
             this.ispaused = false
 
             this.game_over.classList.add("hidden")
@@ -184,15 +281,18 @@ namespace AquaFun {
             this.max_enemy = 1
 
             this.removeAllEnemies(["ship"])
-            this.game_objects.ship.reset()
+            this.game_objects.ship.lives = ASTEROIDS_CONFIG.ship.max_lives
+            this.game_objects.ship.reset(false)
             document.getElementById("gameover").classList.add("hidden")
             
         }
         start() : void
         {
             // INSTANTIATE PLAYERS SHIP
-            this.game_objects.ship = new Ship()
+            if(!this.game_objects.ship)
+                this.game_objects.ship = new Ship()
         
+            this.ispaused = false
             // start the loop
             this.loopid = setInterval(()=> { this.loop() }, 1000 / 60 )
 
@@ -466,6 +566,11 @@ namespace AquaFun {
         private image:string = ASTEROIDS_CONFIG.ship.image
         private bullet_color:string = ASTEROIDS_CONFIG.ship.bullet_color
         private bullet_targets:Array<string> = ASTEROIDS_CONFIG.ship.bullet_targets
+        public force_shield:boolean = false 
+        private shield_id:number = 0
+        private force_shield_timer:number = 0 
+        private force_shield_timer_max:number = ASTEROIDS_CONFIG.ship.force_shield_timer_max 
+        private shield_class:Array<string> = ASTEROIDS_CONFIG.ship.shield_class 
         private shipimage:HTMLImageElement
         private game:Asteroids
         constructor()
@@ -480,7 +585,11 @@ namespace AquaFun {
             this.shipimage.style.height = `${this.size}px`
             this.shipimage.style.visibility = "hidden"
         }
-        reset() : void
+        /**
+         * 
+         * @param force_shield 
+         */
+        reset(force_shield:boolean = true) : void
         {
             this.x = this.game.screen_width / 2
             this.y = this.game.screen_height / 2
@@ -489,6 +598,8 @@ namespace AquaFun {
             this.velocity = { x: 0, y: 0 }
             this.shipimage.style.visibility = "initial"
             this.display_lives()
+            this.force_shield = force_shield
+            this.game.removeAllEnemies(["asteroids","ship"], false)
         }
         loop() : void
         {
@@ -509,8 +620,30 @@ namespace AquaFun {
             // Apply friction by scaling down the velocity:
             this.velocity.x *= (1 - this.friction)
             this.velocity.y *= (1 - this.friction)
+
+            if(this.force_shield)
+                this.shield()
+
             // check outside stage
             this._checkOutSide()
+        }
+        remove_shield()
+        {
+            for(let i=0;i<this.shield_class.length;i++)
+                this.shipimage.classList.remove(this.shield_class[i])
+        }
+        shield() : void
+        {
+            this.remove_shield()
+            this.shipimage.classList.add(this.shield_class[this.shield_id])
+            this.shield_id++
+            if(this.shield_id > this.shield_class.length)this.shield_id = 0
+            this.force_shield_timer++
+            if(this.force_shield_timer >= this.force_shield_timer_max) {
+                this.remove_shield()
+                this.force_shield_timer = 0
+                this.force_shield = false
+            }
         }
         thrust() : void
         {
@@ -556,6 +689,7 @@ namespace AquaFun {
         destroy(boom:boolean = true) : void
         {
             if(this.dead) return
+            if(this.force_shield) return
             if(this.lives > 0)
                 this.lives--
             this.dead = true
@@ -571,15 +705,14 @@ namespace AquaFun {
                 this.shipimage.src = this.image
             }, 1000)
             // wait N seconds
-            setTimeout(()=>{
-                // move me home 
-                // show me again
-                
-                if(this.lives <= 0)
-                {
-                    
-                } else $this.reset()
-            },this.N)
+            if(this.lives <= 0) {
+                this.display_lives()
+                this.game.b_game_over = true 
+                this.game.game_over.classList.remove("hidden")  
+            }else
+                setTimeout(()=>{
+                    $this.reset()
+                },this.N)
         }
         /**
          * this is a bit more complicated than it needs to be so I can animate the lives being drawn
@@ -1070,41 +1203,45 @@ namespace AquaFun {
 // Spawn asteroids and enemies periodically
 function spawnGameObjects() {
     const game = AquaFun.Asteroids.getInstance();
-    if(game.ispaused)return
-    game.game_timer++
-
-    // for debugging
-    //console.log(game.game_timer)
-
-    // Spawn asteroid
-    let draw_asteroid = true
-    if(game.game_timer > game.draw_asteroid_t) draw_asteroid = Math.random() < game.asteroids_random
-    if (game.game_objects.asteroids.length < game.max_asteroids && draw_asteroid) {
-        game.game_objects.asteroids.push(new AquaFun.Asteroid(game.game_objects.asteroids.length));
-    }
-
-    // REMOVE ME - debug enemy
-    // ASTEROIDS_CONFIG.enemy.smart = true
-    // if (game.game_objects.enemys.length < 1) {
-    //     game.game_objects.enemys.push(new AquaFun.Enemy(game.game_objects.enemys.length, 500, 200))
-    // }
     
-    // // Spawn enemy
-    if(game.game_timer > game.allow_enemy_t) {
-        game.allow_enemy = true
-        game.max_enemy+=game.max_enemy_i
-        game.allow_enemy_t += game.allow_enemy_timer_i
-        game.allow_enemy_r += game.allow_enemy_random_i
-        game.level++
-        console.log("Level", game.level)
-    }
-    if(game.allow_enemy){
-        if (game.game_objects.enemys.length < game.max_enemy && Math.random() < game.allow_enemy_r) {
-            
-            game.game_objects.enemys.push(new AquaFun.Enemy(game.game_objects.enemys.length));
+    if(!game.ispaused){
+        game.game_timer++
+
+        // for debugging
+        //console.log(game.game_timer)
+
+        // Spawn asteroid
+        let draw_asteroid = true
+        if(game.game_timer > game.draw_asteroid_t) draw_asteroid = Math.random() < game.asteroids_random
+        if (game.game_objects.asteroids.length < game.max_asteroids && draw_asteroid) {
+            game.game_objects.asteroids.push(new AquaFun.Asteroid(game.game_objects.asteroids.length));
+        }
+
+        // REMOVE ME - debug enemy
+        // ASTEROIDS_CONFIG.enemy.smart = true
+        // if (game.game_objects.enemys.length < 1) {
+        //     game.game_objects.enemys.push(new AquaFun.Enemy(game.game_objects.enemys.length, 500, 200))
+        // }
+        
+        // game event timer
+        if(game.game_timer > game.allow_enemy_t && !game.b_game_over) {
+            game.allow_enemy = true
+            game.max_enemy+=game.max_enemy_i
+            game.allow_enemy_t += game.allow_enemy_timer_i
+            game.allow_enemy_r += game.allow_enemy_random_i
+            game.level++
+            if(game.level > 5)ASTEROIDS_CONFIG.enemy.smart = true
+            console.log("Level", game.level)
+        }
+
+        // // Spawn enemy
+        if(game.allow_enemy){
+            if (game.game_objects.enemys.length < game.max_enemy && Math.random() < game.allow_enemy_r) {
+                
+                game.game_objects.enemys.push(new AquaFun.Enemy(game.game_objects.enemys.length));
+            }
         }
     }
-    
     // Continue checking
     requestAnimationFrame(spawnGameObjects);
 }
@@ -1116,8 +1253,13 @@ window.addEventListener('load', () => {
 
     // Prevent right-click context menu
     document.addEventListener('contextmenu', (e) => e.preventDefault());
+    let $loading = document.createElement("h1")
+        $loading.setAttribute("id","GTHYUGFRQQ_wsasteroids_loading")
+        $loading.innerHTML = "Loading...please wait."
+    document.body.appendChild($loading)
     let $game = document.createElement("div")
         $game.setAttribute("id","GTHYUGFRQQ_wsasteroids")
+        $game.setAttribute("class","fade out")
     document.body.appendChild($game)
         let $style = document.createElement("div")
         $style.innerHTML = `
@@ -1139,8 +1281,14 @@ window.addEventListener('load', () => {
                             // Initialize game
                             const game = new AquaFun.Asteroids();
                             
-                            // Start spawning game objects
-                            spawnGameObjects();
+                            
+                            setTimeout(()=>{
+                                // Start spawning game objects
+                                spawnGameObjects();
+                                $game.classList.remove("out")
+                                $loading.remove()
+                            },
+                            1000)
                         })
                 })
 });
