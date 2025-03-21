@@ -2,8 +2,10 @@
 
 ## 📅 February 26, 2025
 ## ⬆️📅 March 21, 2025
-## ⬆️ 1.0.0.16
+## ⬆️ 1.0.0.17
 
+* ## 1.0.0.17
+*   🐞 fade transition was wonky on LIVE
 * ## 1.0.0.16
 *   🐱 update README
 *   🐱 update TODO

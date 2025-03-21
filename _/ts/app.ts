@@ -1261,7 +1261,7 @@ window.addEventListener('load', () => {
     document.body.appendChild($loading)
     let $game = document.createElement("div")
         $game.setAttribute("id","GTHYUGFRQQ_wsasteroids")
-        $game.setAttribute("class","fade out")
+        $game.setAttribute("class","fade")
     document.body.appendChild($game)
         let $style = document.createElement("div")
         $style.innerHTML = `
@@ -1287,7 +1287,7 @@ window.addEventListener('load', () => {
                             setTimeout(()=>{
                                 // Start spawning game objects
                                 spawnGameObjects();
-                                $game.classList.remove("out")
+                                $game.classList.add("in")
                                 $loading.remove()
                             },
                             1000)
