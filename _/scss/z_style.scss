@@ -24,6 +24,31 @@ body, html {
         display: block;
         position: fixed;
     }
+    .gameover {
+        z-index: 9999999;
+        position: fixed;
+        left: 25vw;
+        top: 30vh;
+        color: #fff;
+        font-size: 1.2em;
+        border-radius: 5px;
+        text-align: center;
+        h1 {
+            font-size: 4rem;
+            letter-spacing: 3rem;
+            margin: 0;
+            padding: 0;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        h2 {
+            font-size: 2rem;
+            letter-spacing: 2rem;
+            margin: 5px 0 16px;
+        }
+    }
     .scoreboard {
         z-index: 9999999;
         position: fixed;
@@ -51,5 +76,22 @@ body, html {
         visibility: initial;
         display: block;
         z-index: 2;
+    }
+    .ship_lives {
+        padding: 0 
+        5px;
+        rotate: -90deg;
+        width: 30px;
+        float: left;
+    }
+    .btn {
+        border-radius: 5px;
+        border: solid 2px #fff;
+        cursor: pointer;
+        padding: 3px 5px;
+        background-color: rgba(2, 2, 114, 0.527);
+    }
+    .hidden {
+        display: none;
     }
 }

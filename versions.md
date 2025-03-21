@@ -7,9 +7,17 @@
 # Versions
 
 ## 📅 February 26, 2025
-## ⬆️📅 March 15, 2025
-## ⬆️ 1.0.0.7
+## ⬆️📅 March 21, 2025
+## ⬆️ 1.0.0.9
 
+* ## 1.0.0.9
+*   🐱 Asteroids.draw allow a target container as a parameter
+*   🐱 Game Over overlay
+*   🐞 ships killing rocks were raising player score 
+*   🐞 rocks removed when game start exploded
+*   🐞 asteroids and ships were poping up in the upper left corner for an instant before moving to their actual positions
+* ## 1.0.0.8
+*   🐞 point_at_obj could error if an object was destroyed
 * ## 1.0.0.7
 *   🐱 added a running example in the local folder
 * ## 1.0.0.6

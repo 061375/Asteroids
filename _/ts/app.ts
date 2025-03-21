@@ -1,24 +1,5 @@
 declare var ASTEROIDS_CONFIG;
 namespace AquaFun {
-    // BUG: pause stops levels from incrementing and rocks from being created
-     
-    // TODO: killing big rocks should make smaller rocks ( like in the original )
-    // TODO: optimize everything as much as possible
-    // TODO: comment
-    // TODO: ships should aim at asteroids that are too close to them ( at higher levels )
-    // TODO: ships will avoid collisions with rocks if possible ( at higher levels )
-    // TODO: the frequency of the ships shooting is still too high 
-    // TODO: on death enemy ships should be removed
-    // TODO: if user logs in as username: captainnemo password: asteroids then the game will play in Nautilus
-    // TODO: better looking scoreboard
-    // TODO: remake ships in Blender
-    // TODO: (maybe) a boss of some kind ... something silly and inappropriate (thinking Monty Python)
-    //          A Donald Trump boss throwing hamburgers and yelling "They're eating the dogs! They're eating the cats!" 
-    //          Followed by the "real" boss Elon shooting starships at you ( but luckily half of them blow up before they even get close )
-    //          The starships will have the first stage and the upper stage will detatch and and actually veer towards Trump ( on purpose but not on purpose )
-    //          If it hits Trump it will damage him. When he dies Elon will hold up flags and cheer with "much rejoicing" ( i.e. Holly Grail )
-    //          They will both have baby bodies 
-    
     // Define a base GameObject class to avoid circular inheritance
     export class GameObject {
         public x: number = 0;
@@ -51,6 +32,7 @@ namespace AquaFun {
         public screen_width:number = window.innerWidth
         public screen_height:number = window.innerHeight
         public score_board:HTMLDivElement
+        public game_over:HTMLDivElement
         public game_container:HTMLElement = document.getElementById("GTHYUGFRQQ_wsasteroids")
         public game_objects:any = {
             ship:null,
@@ -99,13 +81,34 @@ namespace AquaFun {
                 <div class="c5">
                     Level: <span class="level"></span>
                 </div>
+                <div class="c1"></div>
+                <div class="c5 lives flex">
+                </div>
             </div>`
             this.game_container.appendChild(this.score_board)
             /// <-- CREATE A SCOREBOARD
             ///
 
-            // INSTANTIATE PLAYERS SHIP
-            this.game_objects.ship = new Ship()
+            ///
+            /// CREATE GAME OVER -->
+            this.game_over = document.createElement("div")
+            this.game_over.setAttribute("id","gameover")
+            this.game_over.setAttribute("class","gameover")
+            this.game_over.innerHTML = `
+                <div>
+                <h1>ASTEROIDS</h1>
+                <h2>GAME OVER</h2>
+                <div class="flex">
+                    <div class="c5 btn instructions">INSTRUCTIONS</div>
+                    <div class="c1"></div>
+                    <div class="c5 btn newgame">NEW GAME</div>
+                </div>
+                <h3>Jeremy Heminger 2025</h3>
+                </div>
+            `
+            this.game_container.appendChild(this.game_over)
+            /// <-- CREATE GAME OVER
+            ///
 
             ///
             /// EVENTS -->
@@ -151,7 +154,12 @@ namespace AquaFun {
                 }
 
             })
+            document.querySelector("#gameover .newgame").addEventListener("click",(e)=>{
+                e.stopPropagation()
+                $this.new_game()
+            })
             /// <-- EVENTS
+
             ///
             this.start()
         }
@@ -161,11 +169,33 @@ namespace AquaFun {
             }
             return Asteroids.instance;
         }
+        new_game()
+        {
+            
+            this.ispaused = false
+
+            this.game_over.classList.add("hidden")
+            this.score = 0
+            this.level = 1
+            this.game_timer = 0
+            this.allow_enemy = false
+            this.allow_enemy_t = ASTEROIDS_CONFIG.base.allow_enemy_timer
+            this.allow_enemy_r = ASTEROIDS_CONFIG.base.allow_enemy_random
+            this.max_enemy = 1
+
+            this.removeAllEnemies(["ship"])
+            this.game_objects.ship.reset()
+            document.getElementById("gameover").classList.add("hidden")
+            
+        }
         start() : void
         {
-            this.ispaused = false
+            // INSTANTIATE PLAYERS SHIP
+            this.game_objects.ship = new Ship()
+        
             // start the loop
             this.loopid = setInterval(()=> { this.loop() }, 1000 / 60 )
+
             document.getElementById("asteroids_message").innerHTML = ""
         }
         pause() : void
@@ -175,6 +205,23 @@ namespace AquaFun {
             this.loopid = null
             console.log("Game Paused")
             document.getElementById("asteroids_message").innerHTML = "Game Paused"
+        }
+        removeAllEnemies(keep:Array<string> = [], boom:boolean = false)
+        {
+            // loop all game objects to update their loop(s)
+            for(const [key, value] of Object.entries(this.game_objects))
+                {
+                    if(keep.indexOf(key)>-1)continue
+                    if(Array.isArray(value))
+                        {
+                            for(let i=0;i<value.length;i++){
+                                if(keep.indexOf(value[i])>-1)continue
+                                value[i]?.destroy(boom)
+                            }
+                        }else{
+                            this.game_objects[key]?.destroy(boom)
+                        }
+                }
         }
         loop() : void
         {
@@ -190,7 +237,7 @@ namespace AquaFun {
                             for(let i=0;i<value.length;i++)
                                 value[i].loop()
                         }else{
-                            this.game_objects[key].loop()
+                            this.game_objects[key]?.loop()
                         }
                 }
             
@@ -210,7 +257,7 @@ namespace AquaFun {
                 if(loaded_images.indexOf(url) > -1)return
                 preloadImage(img_path + "/" + url, function(){
                     loadedCounter++;
-                    console.log('Number of loaded images: ' + loadedCounter);
+                    console.log('Number of loaded assets: ' + loadedCounter);
                     loaded_images.push(url)
                     if(loadedCounter == toBeLoadedNumber){
                         allImagesLoadedCallback();
@@ -268,8 +315,9 @@ namespace AquaFun {
          * @returns 
          */
         checkCollision($target:any, $parent:any) {
-            let radiusParent = $parent.size / 2;
-            let radiusTarget = $target.size / 2;
+            if(!$parent?.size)return false
+            let radiusParent = $parent?.size / 2;
+            let radiusTarget = $target?.size / 2;
             let distance = Math.hypot($target.x - $parent.x, $target.y - $parent.y);
             return distance < (radiusParent + radiusTarget);
         }
@@ -279,7 +327,7 @@ namespace AquaFun {
          * @param objects 
          * @returns 
          */
-        checkCollisionList($target:any, objects:Array<string>) : any
+        checkCollisionList($target:any, objects:Array<string>, b_score:boolean = false) : any
         {
             for(let i=0;i<objects.length;i++)
                 {
@@ -288,7 +336,7 @@ namespace AquaFun {
                         if(Array.isArray(this.game_objects[objects[i]])){
                             for(let j=0;j<this.game_objects[objects[i]].length;j++){
                                 if(this.checkCollision($target,this.game_objects[objects[i]][j])) {
-                                    if(this.game_objects[objects[i]][j]?.points)
+                                    if(this.game_objects[objects[i]][j]?.points && b_score)
                                         AquaFun.Asteroids.getInstance().score += this.game_objects[objects[i]][j]?.points
                                     return this.game_objects[objects[i]][j]
                                 }
@@ -339,6 +387,7 @@ namespace AquaFun {
          */
         point_at_obj(a:any,b:any,degrees:boolean = true) : number
         {
+            if(!a || !b) return 0
             return this.point_at(a.x,a.y,b.x,b.y,degrees)
         }
         /**
@@ -387,16 +436,18 @@ namespace AquaFun {
          * @param id 
          * @returns HTMLImageElement
          */
-        draw(img:string, id:string, _class:string) : HTMLImageElement
+        draw(img:string, id:string, _class:string, container:HTMLElement = null) : HTMLImageElement
         {
             let $i = document.createElement("img")
             $i.setAttribute("src",img)
             $i.setAttribute("id",id)
             $i.setAttribute("class",_class)
-            this.game_container.appendChild($i)
+            if(null == container)
+                this.game_container.appendChild($i)
+            else container.appendChild($i)
             return $i
         }
-    }
+    } // <-- Asteroids
     class Ship extends GameObject
     {
         public x:number = 0
@@ -404,11 +455,12 @@ namespace AquaFun {
         public size:number = ASTEROIDS_CONFIG.ship.size
         public degrees:number = 0
         public mouseDown:boolean = false
+        private lives:number = ASTEROIDS_CONFIG.ship.max_lives
         private friction:number = ASTEROIDS_CONFIG.ship.friction
         private acc:number = ASTEROIDS_CONFIG.ship.acc
         private velocity:{ x: number; y: number } = { x: 0, y: 0 };
         private maxSpeed:number = ASTEROIDS_CONFIG.ship.maxSpeed 
-        private dead:boolean = false
+        private dead:boolean = true
         private N:number = ASTEROIDS_CONFIG.ship.resetTimer
         private image_id:string = ASTEROIDS_CONFIG.ship.image_id
         private image:string = ASTEROIDS_CONFIG.ship.image
@@ -426,8 +478,7 @@ namespace AquaFun {
             // set ship size by image width when loaded
             this.shipimage.style.width = `${this.size}px`
             this.shipimage.style.height = `${this.size}px`
-            this.shipimage.style.visibility = "initial"
-            this.reset()
+            this.shipimage.style.visibility = "hidden"
         }
         reset() : void
         {
@@ -436,15 +487,8 @@ namespace AquaFun {
             this.dead = false
             // Reset velocity as well
             this.velocity = { x: 0, y: 0 }
-            this.shipimage.src = this.image
             this.shipimage.style.visibility = "initial"
-            this.game.score = 0
-            this.game.level = 1
-            this.game.game_timer = 0
-            this.game.allow_enemy = false
-            this.game.allow_enemy_t = ASTEROIDS_CONFIG.base.allow_enemy_timer
-            this.game.allow_enemy_r = ASTEROIDS_CONFIG.base.allow_enemy_random
-            this.game.max_enemy = 1
+            this.display_lives()
         }
         loop() : void
         {
@@ -506,33 +550,65 @@ namespace AquaFun {
                 this.y, 
                 this.degrees,
                 this.bullet_targets, 
+                true,
                 this.bullet_color))
         }
-        destroy() : void
+        destroy(boom:boolean = true) : void
         {
             if(this.dead) return
+            if(this.lives > 0)
+                this.lives--
             this.dead = true
             let $this = this
 
             // draw exploding animation
-            this.shipimage.src = `${this.game.img_path}${ASTEROIDS_CONFIG.ship.explosion_image}`
+            if(boom)
+                this.shipimage.src = `${this.game.img_path}${ASTEROIDS_CONFIG.ship.explosion_image}`
             
-            // hide me
+            // hide me and reset the image
             setTimeout(()=>{
                 this.shipimage.style.visibility = "hidden"
+                this.shipimage.src = this.image
             }, 1000)
             // wait N seconds
             setTimeout(()=>{
                 // move me home 
                 // show me again
-                $this.reset()
+                
+                if(this.lives <= 0)
+                {
+                    
+                } else $this.reset()
             },this.N)
+        }
+        /**
+         * this is a bit more complicated than it needs to be so I can animate the lives being drawn
+         * @returns 
+         */
+        display_lives() : void
+        {
+            // get the lives container
+            let $container:HTMLElement = this.game.score_board.querySelector(".lives")
+            $container.innerHTML = ""
+            if(this.lives < 1) return
+
+            let $this = this
+            let i = 0
+            let id = setInterval(()=>{
+                let $shipimage = this.game.draw(this.image,`${this.image_id}${i}`,"ship_lives", $container)  
+                    $shipimage.classList.add("ship_lives")
+                i++
+                if(i >= $this.lives){
+                    clearInterval(id)
+                    id = null
+                }
+            },300)
         }
         _checkOutSide() : void
         {
             this.game.checkOutSideLoop(this)
         }
-    }
+    } // <-- Ship
     export class Asteroid extends GameObject
     {
         public points:number = ASTEROIDS_CONFIG.asteroid.points
@@ -548,6 +624,8 @@ namespace AquaFun {
         private dead:boolean = false
         private game:Asteroids
         private target_objects:Array<string> = ASTEROIDS_CONFIG.asteroid.target_objects
+        private visible_timer:number = 0
+        private visible_timer_max:number = 3
         constructor(
             private i:number,
             x:number = 0,
@@ -597,19 +675,21 @@ namespace AquaFun {
             this.image = this.game.draw(`${this.game.img_path}${this.image_src}`,this.image_id,"astroid_img")
             this.image.style.width = `${this.size}px`
             this.image.style.rotate = `${Math.floor(Math.random() * 360)}deg`
-            this.image.style.visibility = "initial"
+            this.image.style.visibility = "hidden"
             
         }
         loop() : void
         {
             if(this.dead) return
+            this.visible_timer++
+            if(this.visible_timer >this.visible_timer_max)this.image.style.visibility = "initial"
             this.game.move_dir_object(this,this.degrees,this.speed)
             this.image.style.left = `${this.x - (this.size/2)}px`
             this.image.style.top = `${this.y - (this.size/2)}px`
             this._checkOutSide()
             this._checkCollision()
         }
-        destroy() : void
+        destroy(boom:boolean = true) : void
         {
             // YOU'RE DEAD - STAY DEAD - AND OUT OF THIS WORLD !!!
             if(this.dead)return
@@ -617,13 +697,15 @@ namespace AquaFun {
 
             let $this = this
             // draw exploding animation
-            this.image.src = `${this.game.img_path}${ASTEROIDS_CONFIG.asteroid.explosion_image}`
-            // if the rocks aren't too small 
+            if(boom){
+                this.image.src = `${this.game.img_path}${ASTEROIDS_CONFIG.asteroid.explosion_image}`
+                // if the rocks aren't too small 
                 if(this.size > ASTEROIDS_CONFIG.asteroid.sizeRange[0] * 3){
                     // make smaller shards from the explosion
                     for(let i=0;i<3;i++)
                         this.game.game_objects.asteroids.push(new AquaFun.Asteroid(this.game.game_objects.asteroids.length,this.x,this.y,this.size / 3,this.speed * 2))
                 }
+            } else $this.N = 1
             // remove after N
             setTimeout(()=>{
                 $this.image.remove()
@@ -649,7 +731,7 @@ namespace AquaFun {
                     this.destroy()
                 }
         }
-    }
+    } // <-- Asteroid
     export class Enemy extends GameObject
     {
         public points:number = ASTEROIDS_CONFIG.enemy.points
@@ -680,6 +762,8 @@ namespace AquaFun {
         private avoid_max:number = 0 
         private avoid_max_max:number = ASTEROIDS_CONFIG.enemy.avoid_max_max 
         private avoid_max_min:number = ASTEROIDS_CONFIG.enemy.avoid_max_min 
+        private visible_timer:number = 0
+        private visible_timer_max:number = 3
         private game: Asteroids
         private text:TextObject
         constructor(
@@ -718,7 +802,7 @@ namespace AquaFun {
             // set my image width
             this.image.style.width = `${this.size}px`
             // set ship invisible initially
-            this.image.style.visibility = "initial"
+            this.image.style.visibility = "hidden"
             // set my speed
             this.speed = ASTEROIDS_CONFIG.enemy.speedIncrementRange[0] + Math.random() * (ASTEROIDS_CONFIG.enemy.speedIncrementRange[0] * this.game.level)
         }
@@ -726,7 +810,8 @@ namespace AquaFun {
         {
             // I'm dead...don't bother me
             if(this.dead) return
-
+            this.visible_timer++
+            if(this.visible_timer > this.visible_timer_max)this.image.style.visibility = "initial"
             this.dir_timer++ 
             if(this.smart)
                 this.avoid()
@@ -744,9 +829,14 @@ namespace AquaFun {
             this.image.style.top = `${this.y - this.image.height / 2}px`
 
             // 1 in 99 and it enemy is not dead then shoot at him
-            if((Math.random() * 100) > 99)
-                if(this.game.game_objects.ship.dead == false || this.other_dis < this.danger_zone)
+            
+            if((Math.random() * 100) > 99){
+                if(this.game.game_objects?.ship)
+                    if(this.game.game_objects.ship.dead == false)
+                        this.shoot()
+                if(this.other_dis < this.danger_zone)
                     this.shoot()
+            }
             
             
             this._checkOutSide()
@@ -862,6 +952,7 @@ namespace AquaFun {
                 this.y,
                 this.shoot_degrees,
                 this.bullet_targets,
+                false,
                 this.bullet_color))
         }
         _checkOutSide() : void
@@ -871,7 +962,7 @@ namespace AquaFun {
                     this.destroy(false)
                 }   
         }
-    }
+    } // <-- Enemy
     class Bullet extends GameObject
     {
         private game: Asteroids
@@ -884,6 +975,7 @@ namespace AquaFun {
             public y:number,
             public degrees:number,
             private target_objects:Array<string>,
+            private b_score:boolean = true,
             private color:string = "#fff"
         )
         {
@@ -926,14 +1018,14 @@ namespace AquaFun {
         }
         _checkCollision() : void
         {
-            let hit = this.game.checkCollisionList(this,this.target_objects)
+            let hit = this.game.checkCollisionList(this,this.target_objects, this.b_score)
             if(hit)
                 {
                     hit.destroy()
                     this.destroy()
                 }
         }
-    }
+    } // <-- Bullet
     /**
      * for debugging - it's easier than console.log and won't crash the browser
      * @usage 
@@ -971,7 +1063,7 @@ namespace AquaFun {
         destroy(): void {
             this.node.remove()
         }
-    }
+    } // <-- TextObject
 } // <-- Aquafun
 
 // load the class and start everything
@@ -980,6 +1072,7 @@ function spawnGameObjects() {
     const game = AquaFun.Asteroids.getInstance();
     if(game.ispaused)return
     game.game_timer++
+
     // for debugging
     //console.log(game.game_timer)
 
@@ -991,10 +1084,10 @@ function spawnGameObjects() {
     }
 
     // REMOVE ME - debug enemy
-    ASTEROIDS_CONFIG.enemy.smart = true
-    if (game.game_objects.enemys.length < 1) {
-        game.game_objects.enemys.push(new AquaFun.Enemy(game.game_objects.enemys.length, 500, 200))
-    }
+    // ASTEROIDS_CONFIG.enemy.smart = true
+    // if (game.game_objects.enemys.length < 1) {
+    //     game.game_objects.enemys.push(new AquaFun.Enemy(game.game_objects.enemys.length, 500, 200))
+    // }
     
     // // Spawn enemy
     if(game.game_timer > game.allow_enemy_t) {
@@ -1051,60 +1144,3 @@ window.addEventListener('load', () => {
                         })
                 })
 });
-
-// const ASTEROIDS_CONFIG = {
-//     base:{
-//         allow_enemy_timer:2000,
-//         allow_enemy_timer_increment:2000,
-//         allow_enemy_random:0.0005,
-//         allow_enemy_random_increment:0.0005,
-//         max_enemy_increment:1,
-//         max_asteroids:20,
-//         asteroids_random:0.02,
-//         draw_asteroids_time:20,
-//         assets_folder:"/img/",
-//         background_image:"space.jpg",
-//         all_images:["space.jpg","boom1.gif","rock1.gif"],
-//         all_svg:["enemy1.svg","ship.svg"],
-//         css_path:"/hydhfifyrhgkuhrmqodta/scripts/css/style.css"
-//     },
-//     ship:{
-//         size:40,
-//         friction:0.005,
-//         acc:0.1,
-//         maxSpeed:10 ,
-//         resetTimer:10000,
-//         image:"ship.svg",
-//         image_id:"asteroids_theship",
-//         bullet_targets:["asteroids","enemys"],
-//         explosion_image:"boom1.gif",
-//         bullet_color:"#fff"
-//     },
-//     asteroid: {
-//         points:100,
-//         resetTimer:1000,
-//         image:"rock1.gif",
-//         image_id:"astroid_img",
-//         sizeRange:[10,50],
-//         speedIncrementRange:[10,20],
-//         explosion_image:"boom1.gif",
-//         target_objects:["ship","enemys"]
-//     },
-//     enemy: {
-//         points:100,
-//         resetTimer:1000,
-//         image:"enemy1.svg",
-//         image_id:"asteroid_enemy",
-//         sizeRange:[30,50],
-//         kos:5000,
-//         border_t:200,
-//         speedIncrementRange:[10,20],
-//         explosion_image:"boom1.gif",
-//         bullet_color:"#edff00",
-//         bullet_targets:["ship","asteroids"]
-//     },
-//     bullet:{
-//         speed:300,
-//         size:3
-//     }
-// }
