@@ -1,4 +1,5 @@
 declare var ASTEROIDS_CONFIG;
+const ASTEROIDS_VERSION:string = "1.0.0.18"
 namespace AquaFun {
     // Define a base GameObject class to avoid circular inheritance
     export class GameObject {
@@ -52,7 +53,7 @@ namespace AquaFun {
             }
             Asteroids.instance = this
 
-            console.log("Asteroids Loaded",ASTEROIDS_CONFIG.base.version)
+            console.log("Asteroids Loaded",ASTEROIDS_VERSION)
 
             // INIT
             let $this = this
@@ -116,7 +117,7 @@ namespace AquaFun {
                         </a>
                     </h3>
                     <br>
-                    <small>version ${ASTEROIDS_CONFIG.base.version}</small>
+                    <small>version ${ASTEROIDS_VERSION}</small>
                 </div>
             `
             this.game_container.appendChild(this.game_over)
@@ -157,6 +158,8 @@ namespace AquaFun {
                     <br>
                     Depressing right-click thrusts your ship.
                     <br>
+                    Depressing right and left mouse at the same time for hyperspace
+                    <br>
                     [ P ] pauses the game.
                     <br>
                     [ B ] the boss is coming!  
@@ -192,6 +195,8 @@ namespace AquaFun {
                     <div class="c6">Boss enemies</div>
                 </div>
                 <p>&nbsp;</p>
+                New ship every ${ASTEROIDS_CONFIG.ship.new_ship} points
+                <p>&nbsp;</p>
                 </div>
             `
             this.game_container.appendChild(this.instructions)
@@ -207,6 +212,7 @@ namespace AquaFun {
                 {
                     case 0: // left click
                         $this.game_objects.ship.shoot(e)
+                        $this.game_objects.ship.LeftMouseDown = true
                         break;
                     case 2: // right click
                         e.preventDefault()
@@ -218,6 +224,7 @@ namespace AquaFun {
                 switch(e.button)
                 {
                     case 0: // left click
+                    $this.game_objects.ship.LeftMouseDown = false
                         break;
                     case 2: // right click
                         $this.game_objects.ship.mouseDown = false
@@ -268,7 +275,7 @@ namespace AquaFun {
             }
             return Asteroids.instance;
         }
-        new_game()
+        new_game() : void
         {
             this.b_game_over = false
             this.ispaused = false
@@ -308,7 +315,7 @@ namespace AquaFun {
             console.log("Game Paused")
             document.getElementById("asteroids_message").innerHTML = "Game Paused"
         }
-        removeAllEnemies(keep:Array<string> = [], boom:boolean = false)
+        removeAllEnemies(keep:Array<string> = [], boom:boolean = false) : void
         {
             // loop all game objects to update their loop(s)
             for(const [key, value] of Object.entries(this.game_objects))
@@ -557,18 +564,25 @@ namespace AquaFun {
         public size:number = ASTEROIDS_CONFIG.ship.size
         public degrees:number = 0
         public mouseDown:boolean = false
+        public LeftMouseDown:boolean = false
+        public force_shield:boolean = false 
         private lives:number = ASTEROIDS_CONFIG.ship.max_lives
         private friction:number = ASTEROIDS_CONFIG.ship.friction
         private acc:number = ASTEROIDS_CONFIG.ship.acc
         private velocity:{ x: number; y: number } = { x: 0, y: 0 };
         private maxSpeed:number = ASTEROIDS_CONFIG.ship.maxSpeed 
         private dead:boolean = true
+        private is_hyperspace:boolean = false
+        private hyperspace_count:number = 0
+        private hyperspace_max:number = 10
+        private hyperspace_size:number = 0
+        private hyperspace_entering:boolean = true
         private N:number = ASTEROIDS_CONFIG.ship.resetTimer
+        private new_ship = ASTEROIDS_CONFIG.ship.new_ship
         private image_id:string = ASTEROIDS_CONFIG.ship.image_id
         private image:string = ASTEROIDS_CONFIG.ship.image
         private bullet_color:string = ASTEROIDS_CONFIG.ship.bullet_color
         private bullet_targets:Array<string> = ASTEROIDS_CONFIG.ship.bullet_targets
-        public force_shield:boolean = false 
         private shield_id:number = 0
         private force_shield_timer:number = 0 
         private force_shield_timer_max:number = ASTEROIDS_CONFIG.ship.force_shield_timer_max 
@@ -605,6 +619,14 @@ namespace AquaFun {
         }
         loop() : void
         {
+            // if score > multiplier ship ++
+            if(this.game.score > this.new_ship)
+            {
+                this.new_ship += ASTEROIDS_CONFIG.ship.new_ship
+                this.lives++
+                this.display_lives()
+            }
+
             // point the ship at the mouse cursor
             this.degrees = this.game.point_at(this.x, this.y,this.game.mouseX,this.game.mouseY)
 
@@ -616,6 +638,13 @@ namespace AquaFun {
             if(this.mouseDown)
                 this.thrust()
             
+            if(this.mouseDown && this.LeftMouseDown)
+                if(!this.is_hyperspace)
+                    this.is_hyperspace = true
+            if(this.is_hyperspace)
+                this.hyperspace()
+
+
             // Update position using the velocity vector
             this.x += this.velocity.x
             this.y += this.velocity.y
@@ -629,7 +658,7 @@ namespace AquaFun {
             // check outside stage
             this._checkOutSide()
         }
-        remove_shield()
+        remove_shield() : void
         {
             for(let i=0;i<this.shield_class.length;i++)
                 this.shipimage.classList.remove(this.shield_class[i])
@@ -692,6 +721,8 @@ namespace AquaFun {
         {
             if(this.dead) return
             if(this.force_shield) return
+            if(this.is_hyperspace) return
+
             if(this.lives > 0)
                 this.lives--
             this.dead = true
@@ -715,6 +746,26 @@ namespace AquaFun {
                 setTimeout(()=>{
                     $this.reset()
                 },this.N)
+        }
+        hyperspace() : void 
+        {
+            this.hyperspace_size += 10
+            this.shipimage.style.boxShadow = `0px 0px ${this.hyperspace_size}px #000`
+
+            if(this.hyperspace_size >= 80 && this.hyperspace_entering){
+                this.hyperspace_entering = false
+                let border = 200
+                // pick random location
+                // move there
+                this.x = border + Math.random() * (this.game.screen_width - border)
+                this.y = border + Math.random() * (this.game.screen_height - border)
+            }
+            if(!this.hyperspace_entering){
+                this.hyperspace_size = 0
+                this.is_hyperspace = false
+                this.hyperspace_entering = true
+                this.shipimage.style.boxShadow = `initial`
+            }
         }
         /**
          * this is a bit more complicated than it needs to be so I can animate the lives being drawn

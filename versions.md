@@ -1,9 +1,13 @@
 # Versions
 
 ## 📅 February 26, 2025
-## ⬆️📅 March 21, 2025
-## ⬆️ 1.0.0.17
+## ⬆️📅 March 26, 2025
+## ⬆️ 1.0.0.18
 
+* ## 1.0.0.18
+*   🐱 bonus ship every Nth points
+*   🐱 moved version number from config to internal
+*   🐱 hyperspace
 * ## 1.0.0.17
 *   🐞 fade transition was wonky on LIVE
 * ## 1.0.0.16

@@ -1,18 +1,19 @@
 # TODO 
+- **BUG** as of version 1.0.0.17 the fade in is weird the first time it loads on LIVE
 - remake ships and maybe rocks in Blender
 - enemies should get progressively more clever
-- bonus ship at score intervals
 - optimize everything as much as possible
 - comment code
 - sound
-- might add hyperspace using middle mouse or the space bar
 - might add shield and if over used the player will die
 - validate config for required fields and set defaults
 - move game over and instructions to external templates for easier editing
 - High scores stored in a database or maybe just local storage
 - (maybe) a boss of some kind ... something silly and inappropriate (thinking Monty Python)
 -- A Donald Trump boss throwing hamburgers and yelling "They're eating the dogs! They're eating the cats!"
--- Followed by the "real" boss Elon shooting starships at you ( but luckily half of them blow up before they even get close ) The starships will have the first stage and the upper stage will detach and and actually veer towards Trump ( on purpose but not on purpose ). If it hits Trump it will damage him. When he dies Elon will hold up flags and cheer with "much rejoicing" ( i.e. Holy Grail ). They will both have FAT baby bodies
+-- Followed by the "real" boss Elon shooting starships at you ( but luckily half of them blow up before they even get close ) The starships will have the first stage and the upper stage will detach and and actually veer towards Trump ( on purpose but not on purpose ). If it hits Trump it will damage him. When he dies Elon will hold up flags and cheer with "much rejoicing" ( i.e. Holy Grail ). They will both have FAT baby bodies 
+- **DONE** might add hyperspace using middle mouse or the space bar
+- **DONE** bonus ship at score intervals
 - **DONE** on player death enemy ships should be removed ( reset )
 - **DONE** **BUG** enemy destroyng asteroids raises player score
 - **DONE** **BUG** enemy ships no longer firing at rocks or dodging
@@ -21,7 +22,7 @@
 - **DONE** **BUG** level is going up even when game is in game over status
 - **DONE** max ships per game
 - **BUG** **DONE** max ships not being reset on new game
-- **BUG** last ship not being removed at game over
+- **BUG** **DONE** last ship not being removed at game over
 - **DONE** killing big rocks should make smaller rocks ( like in the original ) 
 - **DONE** ships should aim at asteroids that are too close to them ( at higher levels )
 - **DONE** ships will avoid collisions with rocks if possible ( at higher levels )
