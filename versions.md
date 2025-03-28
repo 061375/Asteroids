@@ -1,9 +1,11 @@
 # Versions
 
 ## 📅 February 26, 2025
-## ⬆️📅 March 26, 2025
-## ⬆️ 1.0.0.18
+## ⬆️📅 March 28, 2025
+## ⬆️ 1.0.0.19
 
+* ## 1.0.0.19
+*   🐱 added config validation
 * ## 1.0.0.18
 *   🐱 bonus ship every Nth points
 *   🐱 moved version number from config to internal

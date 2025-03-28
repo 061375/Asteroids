@@ -6,3 +6,4 @@ _/**/*.js
 _*.map
 _/**/*.map
 package-lock.json
+*.code-workspace

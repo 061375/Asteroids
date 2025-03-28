@@ -1298,9 +1298,231 @@ function spawnGameObjects() {
     // Continue checking
     requestAnimationFrame(spawnGameObjects);
 }
+interface ValidProperty {
+    message: string;
+    isValid: boolean;
+}
+/**
+ * validateProperties
+ * @param {object} init_object 
+ * @returns object
+ */
+function validateProperties(init_object:any) : ValidProperty 
+{
+    if (!init_object?.base) {
+        return { isValid: false, message: "[ base ] must be defined" };
+    }
+    if (!init_object?.ship) {
+        return { isValid: false, message: "[ ship ] must be defined" };
+    }
+    if (!init_object?.asteroid) {
+        return { isValid: false, message: "[ asteroid ] must be defined" };
+    }
+    if (!init_object?.enemy) {
+        return { isValid: false, message: "[ enemy ] must be defined" };
+    }
+    if (!init_object?.bullet) {
+        return { isValid: false, message: "[ bullet ] must be defined" };
+    }
+
+
+    ///
+    /// set defaults for base -->
+    if (!init_object.base?.allow_enemy_timer) {
+        init_object.base.allow_enemy_timer = 2000
+    }
+    if (!init_object.base?.allow_enemy_timer_increment) {
+        init_object.base.allow_enemy_timer_increment = 2000
+    }
+    if (!init_object.base?.allow_enemy_random) {
+        init_object.base.allow_enemy_random = 0.0005
+    }
+    if (!init_object.base?.allow_enemy_random_increment) {
+        init_object.base.allow_enemy_random_increment = 0.0005
+    }
+    if (!init_object.base?.max_enemy_increment) {
+        init_object.base.max_enemy_increment = 1
+    }
+    if (!init_object.base?.max_asteroids) {
+        init_object.base.max_asteroids = 20
+    }
+    if (!init_object.base?.asteroids_random) {
+        init_object.base.asteroids_random = 0.02
+    }
+    if (!init_object.base?.draw_asteroids_time) {
+        init_object.base.draw_asteroids_time = 20
+    }
+    if (!init_object.base?.assets_folder) {
+        return { isValid: false, message: "[ base ] must have [ assets_folder:string ] defined." };
+    }
+    if (!init_object.base?.img_folder) {
+        return { isValid: false, message: "[ base ] must have [ img_folder:string ] defined." };
+    }
+    if (!init_object.base?.svg_folder) {
+        return { isValid: false, message: "[ base ] must have [ svg_folder:string ] defined." };
+    }
+    if (!init_object.base?.background_image) {
+        return { isValid: false, message: "[ base ] must have [ background_image:string ] defined." };
+    }
+    if (!init_object.base?.all_images) {
+        return { isValid: false, message: "[ base ] must have [ all_images:Array<string> ] defined." };
+    }
+    if (!init_object.base?.all_svg) {
+        return { isValid: false, message: "[ base ] must have [ all_svg:Array<string> ] defined." };
+    }
+    if (!init_object.base?.css_path) {
+        return { isValid: false, message: "[ base ] must have [ css_path:string ] defined." };
+    }
+    if (!init_object.base?.boss_coming_link) {
+        init_object.base.boss_coming_link = "https://jeremyheminger.com/"
+    }
+    /// <-- set defaults for base
+    /// 
+
+    ///
+    /// set defaults for ship -->
+    if (!init_object.ship?.max_lives) {
+        init_object.ship.max_lives = 3
+    }
+    if (!init_object.ship?.new_ship) {
+        init_object.ship.new_ship = 10000
+    }
+    if (!init_object.ship?.size) {
+        init_object.ship.size = 40
+    }
+    if (!init_object.ship?.friction) {
+        init_object.ship.friction = 0.005
+    }
+    if (!init_object.ship?.acc) {
+        init_object.ship.acc = 0.1
+    }
+    if (!init_object.ship?.maxSpeed) {
+        init_object.ship.maxSpeed = 10
+    }
+    if (!init_object.ship?.resetTimer) {
+        init_object.ship.resetTimer = 10000
+    }
+    if (!init_object.ship?.force_shield_timer_max) {
+        init_object.ship.force_shield_timer_max = 200
+    }
+    if (!init_object.ship?.image_id) {
+        init_object.ship.image_id = "asteroids_theship"
+    }
+    if (!init_object.ship?.bullet_color) {
+        init_object.ship.bullet_color = "#fff"
+    }
+    if (!init_object.ship?.image) {
+        return { isValid: false, message: "[ ship ] must have [ image:string ] defined." };
+    }
+    if (!init_object.ship?.bullet_targets) {
+        return { isValid: false, message: "[ ship ] must have [ bullet_targets:Array<string> ] defined." };
+    }
+    if (!init_object.ship?.explosion_image) {
+        return { isValid: false, message: "[ ship ] must have [ explosion_image:string ] defined." };
+    }
+    if (!init_object.ship?.shield_class) {
+        return { isValid: false, message: "[ ship ] must have [ shield_class:Array<string> ] defined." };
+    }
+    /// <-- set defaults for ship
+    ///
+    
+    ///
+    /// set defaults for asteroid -->
+    if (!init_object.asteroid?.points) {
+        init_object.asteroid.points = 100
+    }
+    if (!init_object.asteroid?.resetTimer) {
+        init_object.asteroid.resetTimer = 1000
+    }
+    if (!init_object.asteroid?.sizeRange) {
+        init_object.asteroid.sizeRange = [10,50]
+    }
+    if (!init_object.asteroid?.sizeRange) {
+        init_object.asteroid.sizeRange = [10,20]
+    }
+    if (!init_object.asteroid?.explosion_image) {
+        init_object.asteroid.explosion_image = ["ship","enemys"]
+    }
+    if (!init_object.ship?.image) {
+        return { isValid: false, message: "[ asteroid ] must have [ image:string ] defined." };
+    }
+    if (!init_object.ship?.explosion_image) {
+        return { isValid: false, message: "[ asteroid ] must have [ explosion_image:string ] defined." };
+    }
+    /// <-- set defaults for asteroid
+    ///
+
+    ///
+    /// set defaults for enemy -->
+    if (!init_object.enemy?.smart) {
+        init_object.enemy.smart = false
+    }
+    if (!init_object.enemy?.points) {
+        init_object.enemy.points = 100
+    }
+    if (!init_object.enemy?.resetTimer) {
+        init_object.enemy.resetTimer = 1000
+    }
+    if (!init_object.enemy?.sizeRange) {
+        init_object.enemy.sizeRange = [30,50]
+    }
+    if (!init_object.enemy?.kos) {
+        init_object.enemy.kos = 5000
+    }
+    if (!init_object.enemy?.border_t) {
+        init_object.enemy.border_t = 200
+    }
+    if (!init_object.enemy?.speedIncrementRange) {
+        init_object.enemy.speedIncrementRange = [20,40]
+    }
+    if (!init_object.enemy?.bullet_color) {
+        init_object.enemy.bullet_color = "#edff00"
+    }
+    if (!init_object.enemy?.image_id) {
+        init_object.enemy.image_id = "asteroid_enemy"
+    }
+    if (!init_object.enemy?.bullet_targets) {
+        init_object.enemy.bullet_targets = ["ship","asteroids"]
+    }
+    if (!init_object.enemy?.image) {
+        return { isValid: false, message: "[ enemy ] must have [ image:string ] defined." };
+    }
+    if (!init_object.ship?.explosion_image) {
+        return { isValid: false, message: "[ asteroid ] must have [ explosion_image:string ] defined." };
+    }
+    /// <-- set defaults for enemy
+    ///
+
+    ///
+    /// set defaults for bullet -->
+    if (!init_object.bullet?.speed) {
+        init_object.bullet.speed = 300
+    }
+    if (!init_object.bullet?.size) {
+        init_object.bullet.size = 3
+    }
+    /// <-- set defaults for bullet
+    ///
+
+    return { isValid: true, message: "" }; // No errors found
+}
 
 // Load the class and start everything
 window.addEventListener('load', () => {
+    /// VALIDATE -->
+    if(!ASTEROIDS_CONFIG){
+        console.error("ASTEROIDS_CONFIG:any is a required object")
+        return
+    }
+    // Validate critical properties
+    const validationResult = this.validateProperties(ASTEROIDS_CONFIG);
+    if (!validationResult.isValid) {
+        console.error(validationResult.message)
+        // Handle error appropriately, could be throwing, logging, or using a callback
+        throw new Error(validationResult.message)
+    }
+    // <-- VALIDATE
+
     // remove any Nautilus stuff
     document.body.innerHTML = ""
 
