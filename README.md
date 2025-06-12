@@ -13,6 +13,8 @@ I originally built a little easter egg into an intranet app at work. In the logi
 
 ![screenshot 2](local/assets/img/screenshot2.jpg)
 
+![screenshot 3](local/assets/img/screenshot3.jpg)
+
 [Online DEMO](https://demo.jeremyheminger.com/asteroids/)
 
 [Versions](versions.md)
