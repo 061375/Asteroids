@@ -15,13 +15,14 @@ I originally built a little easter egg into an intranet app at work. In the logi
 
 [TODO list](todo.md)
 
+![screenshot 3](local/assets/img/screenshot3.jpg)
+
+[Test video of Trump Arm Kinematics](https://www.youtube.com/watch?v=6LbJHIq0CBw)
+
 ![screenshot 1](local/assets/img/screenshot1.jpg)  
 
 ![screenshot 2](local/assets/img/screenshot2.jpg)
 
-![screenshot 3](local/assets/img/screenshot3.jpg)
-
-[Test video of Trump Arm Kinematics](https://www.youtube.com/watch?v=6LbJHIq0CBw)
 
 Development uses [GRUNT](https://gruntjs.com/).
 Start by running:
