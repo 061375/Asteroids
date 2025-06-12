@@ -21,7 +21,7 @@ I originally built a little easter egg into an intranet app at work. In the logi
 
 ![screenshot 3](local/assets/img/screenshot3.jpg)
 
-![Test video of Trump Arm Kinematics](https://www.youtube.com/watch?v=6LbJHIq0CBw)
+[Test video of Trump Arm Kinematics](https://www.youtube.com/watch?v=6LbJHIq0CBw)
 
 Development uses [GRUNT](https://gruntjs.com/).
 Start by running:
