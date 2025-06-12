@@ -11,9 +11,11 @@
 - **IN PROGRESS** might add shield and if over used the player will die
 - move game over and instructions to external templates for easier editing
 - High scores stored in a database or maybe just local storage
-- (maybe) a boss of some kind ... something silly and inappropriate (thinking Monty Python)
+- **BOSS** Something silly and inappropriate (thinking Monty Python)
     - A Donald Trump boss throwing hamburgers and yelling "They're eating the dogs! They're eating the cats!"
     - Followed by the "real" boss Elon shooting starships at you ( but luckily half of them blow up before they even get close ) The starships will have the first stage and the upper stage will detach and and actually veer towards Trump ( on purpose but not on purpose ). If it hits Trump it will damage him. When he dies Elon will hold up flags and cheer with "much rejoicing" ( i.e. Holy Grail ). They will both have FAT baby bodies 
+    - When Trump gets hit he will get angry at Musk. X will show up *kind of like Mortal Kombat* from the top and he'll say "You need to be quiet"
+    - Maybe a cheat code to make Trump & Elon make up ( a Babel finishing move )
 - Trump boss **IN PROGRESS** 
     - **BUG** Arms flailing is inconsitent based on first page load
     - **IN PROGRESS** head should look at ship
