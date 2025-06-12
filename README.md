@@ -9,17 +9,18 @@
 
 I originally built a little easter egg into an intranet app at work. In the login if the user gave the secret user name and password that was *not very* surreptitiously nested in the HTML source of the login page, then a simple Asteroids game would appear. However once I started playing with it, *over time*, it started to evolve into a project at home on my own time.
 
+[Online DEMO](https://demo.jeremyheminger.com/asteroids/)
+
+[Versions](versions.md)
+
+[TODO list](todo.md)
+
 ![screenshot 1](local/assets/img/screenshot1.jpg)  
 
 ![screenshot 2](local/assets/img/screenshot2.jpg)
 
 ![screenshot 3](local/assets/img/screenshot3.jpg)
 
-[Online DEMO](https://demo.jeremyheminger.com/asteroids/)
-
-[Versions](versions.md)
-
-[TODO list](todo.md)
 
 Development uses [GRUNT](https://gruntjs.com/).
 Start by running:
