@@ -4,11 +4,11 @@
 - **BUG** I noticed that for some reason the hyperspace was stuck on when thrusting. only lasted a few seconds
 - remake ships and maybe rocks in Blender
 - enemies should get progressively more clever
+- - the AI for the ships is still too stupid to navigate around the asteroids when things start to get fast. It should at least kill enough rocks to get to the player to try and kill it.
 - optimize everything as much as possible
 - comment code
 - ditch the all_images loader loop and loop the config object
 - sound
-- **IN PROGRESS** might add shield and if over used the player will die
 - move game over and instructions to external templates for easier editing
 - High scores stored in a database or maybe just local storage
 - **BOSS** Something silly and inappropriate (thinking Monty Python)
@@ -47,7 +47,7 @@
     - hand **DONE**
     - diaper **DONE**
     - legs **DONE** 
-    - starship
+    - starship **IN PROGRESS**
     - X
 - **DONE** modify TextObject to take CSS so it can also be used a speech bubbles for the bosses
 - **DONE** validate config for required fields and set defaults
@@ -71,3 +71,4 @@
 - **DONE** game over
 - **DONE** game over starting screen
 - **DONE** force field after death for a few moments when ship is made alive again
+- **DONE** might add shield and if over used the player will die *the player can easily die if over used anywhays*
