@@ -4,7 +4,7 @@
 
 	ᓚᘏᗢ
 
-#### Built without AI ... erm ... *mostly* . It's much more fun to code projects myself but, it's also faster to ask ChatGPT ,*when I get stuck*, than to dig around on Stack Overflow.
+#### Built without AI. It's much more fun to code projects myself.
 #### This is sort of an homage to : [Kickass!](https://kickassapp.com)
 
 I originally built a little easter egg into an intranet app at work. In the login if the user gave the secret user name and password that was *not very* surreptitiously nested in the HTML source of the login page, then a simple Asteroids game would appear. However once I started playing with it, *over time*, it started to evolve into a project at home on my own time.
